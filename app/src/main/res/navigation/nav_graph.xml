@@ -3,26 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/WelcomeFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="dev.jord.todo.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/WelcomeFragment"
+        android:name="dev.jord.todo.WelcomeFragment"
+        android:label="@string/welcome_label"
+        tools:layout="@layout/fragment_welcome">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_Welcome_to_Login"
+            app:destination="@id/LoginFragment" />
+
+        <action
+            android:id="@+id/action_Welcome_to_Register"
+            app:destination="@id/RegisterFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="dev.jord.todo.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/LoginFragment"
+        android:name="dev.jord.todo.LoginFragment"
+        android:label="@string/login_label"
+        tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_Login_to_Welcome"
+            app:destination="@id/WelcomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="dev.jord.todo.RegisterFragment"
+        android:label="@string/register_label"
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/action_Register_to_Welcome"
+            app:destination="@id/WelcomeFragment" />
     </fragment>
 </navigation>
