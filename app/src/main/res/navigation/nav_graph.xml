@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/WelcomeFragment"
-        android:name="dev.jord.todo.WelcomeFragment"
+        android:name="dev.jord.todo.ui.auth.WelcomeFragment"
         android:label="@string/welcome_label"
         tools:layout="@layout/fragment_welcome">
 
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/LoginFragment"
-        android:name="dev.jord.todo.LoginFragment"
+        android:name="dev.jord.todo.ui.auth.LoginFragment"
         android:label="@string/login_label"
         tools:layout="@layout/fragment_login">
 
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/RegisterFragment"
-        android:name="dev.jord.todo.RegisterFragment"
+        android:name="dev.jord.todo.ui.auth.RegisterFragment"
         android:label="@string/register_label"
         tools:layout="@layout/fragment_register">
 
