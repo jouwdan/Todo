@@ -18,6 +18,11 @@
         <action
             android:id="@+id/action_Welcome_to_Register"
             app:destination="@id/RegisterFragment" />
+
+        <action
+            android:id="@+id/action_Welcome_to_Home"
+            app:destination="@+id/home_navigation" />
+            />
     </fragment>
     <fragment
         android:id="@+id/LoginFragment"
@@ -28,6 +33,10 @@
         <action
             android:id="@+id/action_Login_to_Welcome"
             app:destination="@id/WelcomeFragment" />
+        <action
+            android:id="@+id/action_Login_to_Home"
+            app:destination="@+id/home_navigation" />
+        />
     </fragment>
     <fragment
         android:id="@+id/RegisterFragment"
@@ -38,5 +47,10 @@
         <action
             android:id="@+id/action_Register_to_Welcome"
             app:destination="@id/WelcomeFragment" />
+        <action
+            android:id="@+id/action_Register_to_Home"
+            app:destination="@+id/home_navigation" />
     </fragment>
+
+    <include app:graph="@navigation/home_navigation" />
 </navigation>

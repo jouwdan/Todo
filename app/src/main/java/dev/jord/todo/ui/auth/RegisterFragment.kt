@@ -47,19 +47,16 @@ class RegisterFragment : Fragment() {
         viewModel.register.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UiState.Loading -> {
-                    binding.register.setText("")
                     binding.loading.show()
                 }
                 is UiState.Failure -> {
-                    binding.register.setText("Register")
                     binding.loading.hide()
                     snackbar("Registration error")
                 }
                 is UiState.Success -> {
-                    binding.register.setText("Register")
                     binding.loading.hide()
                     snackbar(state.data)
-                    findNavController().navigate(R.id.action_Register_to_Welcome)
+                    findNavController().navigate(R.id.action_Register_to_Home)
                 }
             }
         }

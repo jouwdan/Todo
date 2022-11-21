@@ -45,16 +45,13 @@ class LoginFragment : Fragment() {
         viewModel.login.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UiState.Loading -> {
-                    binding.login.setText("")
                     binding.loading.show()
                 }
                 is UiState.Failure -> {
-                    binding.login.setText("Login")
                     binding.loading.hide()
                     snackbar("error")
                 }
                 is UiState.Success -> {
-                    binding.login.setText("Login")
                     binding.loading.hide()
                     snackbar(state.data)
                     findNavController().navigate(R.id.action_Login_to_Welcome)
@@ -91,7 +88,7 @@ class LoginFragment : Fragment() {
         super.onStart()
         viewModel.getSession { user ->
             if (user != null){
-                findNavController().navigate(R.id.action_Login_to_Welcome)
+                findNavController().navigate(R.id.action_Login_to_Home)
             }
         }
     }
