@@ -2,6 +2,7 @@ package dev.jord.todo
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -53,8 +54,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupOnClickListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
             val fragment = when(it.itemId){
-                R.id.home -> { if (user != null) { HomeFragment() } else { WelcomeFragment() } }
-                R.id.account -> { if (user != null) { AccountFragment() } else { WelcomeFragment() } }
+                R.id.home -> { HomeFragment() }
+                R.id.account -> { AccountFragment() }
                 else -> { HomeFragment() }
             }
             loadFragment(fragment)
