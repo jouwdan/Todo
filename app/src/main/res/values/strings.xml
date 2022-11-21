@@ -6,6 +6,8 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="reset_password">Reset Password</string>
     <string name="enter_name">Please enter your Name</string>
     <string name="enter_email">Please enter your Email</string>
     <string name="enter_password">Please enter your Password</string>

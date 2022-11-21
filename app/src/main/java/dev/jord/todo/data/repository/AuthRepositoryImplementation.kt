@@ -26,9 +26,9 @@ class AuthRepositoryImplementation @Inject constructor(
         user: User,
         result: (UiState<String>) -> Unit
     ) {
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnCompleteListener {
-            if(it.isSuccessful) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { it ->
+                if(it.isSuccessful) {
                 user.id = it.result.user?.uid ?: ""
                 updateUserInfo(user) { state ->
                     if (state is UiState.Success) {
@@ -67,13 +67,14 @@ class AuthRepositoryImplementation @Inject constructor(
     }
 
     override fun loginUser(email: String, password: String, result: (UiState<String>) -> Unit) {
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                storeSession(id = task.result.user?.uid ?: "") {
-                    if (it == null) {
-                        result.invoke(UiState.Failure("Failed to store session locally"))
-                    } else {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener() { signIn ->
+            if (signIn.isSuccessful) {
+                val user = auth.currentUser
+                storeSession(id = user?.uid ?: "") {
+                    if (it != null) {
                         result.invoke(UiState.Success("Login Success"))
+                    } else {
+                        result.invoke(UiState.Failure("Failed to store session locally"))
                     }
                 }
             } else {

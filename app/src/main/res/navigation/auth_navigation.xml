@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/auth_navigation"
     app:startDestination="@id/WelcomeFragment">
 
     <fragment
@@ -22,7 +22,6 @@
         <action
             android:id="@+id/action_Welcome_to_Home"
             app:destination="@+id/home_navigation" />
-            />
     </fragment>
     <fragment
         android:id="@+id/LoginFragment"
@@ -36,7 +35,15 @@
         <action
             android:id="@+id/action_Login_to_Home"
             app:destination="@+id/home_navigation" />
-        />
+        <action
+            android:id="@+id/action_Login_to_ForgotPassword"
+            app:destination="@+id/ForgotPassword" />
+    </fragment>
+    <fragment
+        android:id="@+id/ForgotPassword"
+        android:name="dev.jord.todo.ui.auth.ForgotPasswordFragment"
+        android:label="@string/forgot_password"
+        tools:layout="@layout/fragment_forgot_password">
     </fragment>
     <fragment
         android:id="@+id/RegisterFragment"

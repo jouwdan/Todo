@@ -6,46 +6,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.jord.todo.R
-import dev.jord.todo.databinding.FragmentLoginBinding
+import dev.jord.todo.databinding.FragmentForgotPasswordBinding
 import dev.jord.todo.util.*
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class ForgotPasswordFragment : Fragment() {
 
-    val TAG: String = "LoginFragment"
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    val TAG: String = "ForgotPasswordFragment"
+    lateinit var binding: FragmentForgotPasswordBinding
     val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentForgotPasswordBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observer()
-        binding.login.setOnClickListener {
-            if (validation()) {
-                viewModel.login(
-                    email = binding.username.text.toString(),
-                    password = binding.password.text.toString()
-                )
+        binding.forgotPasswordButton.setOnClickListener {
+            if (validation()){
+                viewModel.forgotPassword(binding.username.text.toString())
             }
-        }
-        binding.forgotPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_Login_to_ForgotPassword)
         }
     }
 
     private fun observer(){
-        viewModel.login.observe(viewLifecycleOwner) { state ->
+        viewModel.forgotPassword.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UiState.Loading -> {
                     binding.loading.show()
@@ -57,38 +50,22 @@ class LoginFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.hide()
                     snackbar(state.data)
-                    findNavController().navigate(R.id.action_Login_to_Home)
                 }
             }
         }
     }
 
-    private fun validation(): Boolean {
+    fun validation(): Boolean {
         var isValid = true
-
         if (binding.username.text.isNullOrEmpty()){
             isValid = false
             snackbar(getString(R.string.enter_email))
         }else{
             if (!binding.username.text.toString().isValidEmail()){
                 isValid = false
-                snackbar(getString(R.string.invalid_login))
-            }
-        }
-        if (binding.password.text.isNullOrEmpty()){
-            isValid = false
-            snackbar(getString(R.string.enter_password))
-        }else{
-            if (binding.password.text.toString().length < 8){
-                isValid = false
-                snackbar(getString(R.string.invalid_login))
+                snackbar(getString(R.string.invalid_email))
             }
         }
         return isValid
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -43,7 +43,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    fun observer() {
+    private fun observer() {
         viewModel.register.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UiState.Loading -> {
@@ -62,7 +62,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    fun validation(): Boolean {
+    private fun validation(): Boolean {
         var isValid = true
 
         if (binding.name.text.isNullOrEmpty()){
@@ -91,7 +91,7 @@ class RegisterFragment : Fragment() {
         return isValid
     }
 
-    fun getUserObj(): User {
+    private fun getUserObj(): User {
         return User(
             id = "",
             name = binding.name.text.toString(),
