@@ -20,6 +20,10 @@ import dev.jord.todo.ui.auth.AuthViewModel
 import dev.jord.todo.ui.auth.LoginFragment
 import dev.jord.todo.ui.auth.WelcomeFragment
 import dev.jord.todo.ui.home.HomeFragment
+import dev.jord.todo.util.UiState
+import dev.jord.todo.util.hide
+import dev.jord.todo.util.show
+import dev.jord.todo.util.snackbar
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,8 +42,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         if (user != null) {
             loadFragment(HomeFragment())
+            binding.bottomNavigation.show()
         } else {
             loadFragment(WelcomeFragment())
+            binding.bottomNavigation.hide()
         }
         setupOnClickListener()
     }
