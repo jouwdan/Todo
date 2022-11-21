@@ -26,26 +26,22 @@ class AuthRepositoryImplementation @Inject constructor(
         user: User,
         result: (UiState<String>) -> Unit
     ) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+        auth.createUserWithEmailAndPassword(email,password)
+            .addOnCompleteListener {
             if(it.isSuccessful) {
                 user.id = it.result.user?.uid ?: ""
                 updateUserInfo(user) { state ->
-                    when(state) {
-                        is UiState.Success -> {
-                            storeSession(id = it.result.user?.uid ?: "") {
-                                if(it == null) {
-                                    result.invoke(UiState.Failure("Registration successful, Failed to store session."))
-                                } else {
-                                    result.invoke(UiState.Success("Registration Successful!"))
-                                }
+                    if (state is UiState.Success) {
+                        storeSession(id = it.result.user?.uid ?: "") {
+                            if(it == null) {
+                                result.invoke(UiState.Failure("Registration successful, Failed to store session."))
+                            } else {
+                                result.invoke(UiState.Success("Registration Successful!"))
                             }
                         }
-                        is UiState.Failure -> {
-                            result.invoke(UiState.Failure(state.error))
-                        }
-                        else -> {
-
-                        }
+                    }
+                    else if (state is UiState.Failure) {
+                        result.invoke(UiState.Failure(state.error))
                     }
                 }
             } else {
@@ -80,6 +76,8 @@ class AuthRepositoryImplementation @Inject constructor(
                         result.invoke(UiState.Success("Login Success"))
                     }
                 }
+            } else {
+                result.invoke(UiState.Failure("Authentication failed"))
             }
         }.addOnFailureListener {
             result.invoke(UiState.Failure("Authentication failed"))

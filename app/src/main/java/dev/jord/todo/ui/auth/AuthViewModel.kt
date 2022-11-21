@@ -36,7 +36,7 @@ class AuthViewModel @Inject constructor(
 
     fun login(email: String, password: String) {
         _login.value = UiState.Loading
-        repository.loginUser(email = email, password = password) {
+        repository.loginUser(email, password) {
             _register.value = it
         }
     }
