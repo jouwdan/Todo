@@ -6,9 +6,12 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="enter_name">Please enter your Name</string>
     <string name="enter_email">Please enter your Email</string>
     <string name="enter_password">Please enter your Password</string>
     <string name="invalid_login">Invalid login, please try again</string>
+    <string name="invalid_email">Email is invalid, please try again</string>
+    <string name="invalid_password">Password is invalid, please try again</string>
     <string name="welcome_label">Welcome to Todo</string>
     <string name="login_label">Login to Todo</string>
     <string name="register_label">Join Todo</string>
