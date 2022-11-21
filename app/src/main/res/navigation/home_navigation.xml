@@ -13,6 +13,8 @@
 
         <action
             android:id="@+id/action_Home_to_Welcome"
-            app:destination="@id/WelcomeFragment" />
+            app:destination="@id/auth_navigation" />
     </fragment>
+
+    <include app:graph="@navigation/auth_navigation" />
 </navigation>

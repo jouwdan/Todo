@@ -58,6 +58,4 @@
             android:id="@+id/action_Register_to_Home"
             app:destination="@+id/home_navigation" />
     </fragment>
-
-    <include app:graph="@navigation/home_navigation" />
 </navigation>
