@@ -13,6 +13,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     val repository: AuthRepository
 ): ViewModel() {
+
+    private val TAG = "AuthViewModel"
     private val _register = MutableLiveData<UiState<String>>()
     val register: LiveData<UiState<String>>
         get() = _register

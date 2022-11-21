@@ -11,8 +11,9 @@ import dev.jord.todo.data.model.User
 import dev.jord.todo.util.FireStoreCollection
 import dev.jord.todo.util.SharedPrefConstants
 import dev.jord.todo.util.UiState
+import javax.inject.Inject
 
-class AuthRespositoryImplementation(
+class AuthRepositoryImplementation @Inject constructor(
     val auth: FirebaseAuth,
     val database: FirebaseFirestore,
     val appPreferences: SharedPreferences,
