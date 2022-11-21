@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
 import dev.jord.todo.data.model.User
 import dev.jord.todo.databinding.FragmentRegisterBinding
+import dev.jord.todo.ui.home.HomeFragment
 import dev.jord.todo.util.*
 
 @AndroidEntryPoint
@@ -56,7 +57,9 @@ class RegisterFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.hide()
                     snackbar(state.data)
-                    findNavController().navigate(R.id.action_Register_to_Home)
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.container, HomeFragment())
+                        ?.commit();
                 }
             }
         }

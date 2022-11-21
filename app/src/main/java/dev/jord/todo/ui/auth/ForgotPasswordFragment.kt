@@ -50,6 +50,9 @@ class ForgotPasswordFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.hide()
                     snackbar(state.data)
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.container, LoginFragment())
+                        ?.commit();
                 }
             }
         }

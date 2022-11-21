@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Home"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/account"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Account"/>

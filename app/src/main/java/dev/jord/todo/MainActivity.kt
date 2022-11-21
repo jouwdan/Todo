@@ -2,20 +2,31 @@ package dev.jord.todo
 
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.databinding.ActivityMainBinding
+import dev.jord.todo.ui.account.AccountFragment
+import dev.jord.todo.ui.auth.AuthViewModel
+import dev.jord.todo.ui.auth.LoginFragment
+import dev.jord.todo.ui.auth.WelcomeFragment
+import dev.jord.todo.ui.home.HomeFragment
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    val user = Firebase.auth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -25,10 +36,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        if (user != null) {
+            loadFragment(HomeFragment())
+        } else {
+            loadFragment(WelcomeFragment())
+        }
+        setupOnClickListener()
+    }
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+    private fun setupOnClickListener() {
+        binding.bottomNavigation.setOnItemSelectedListener {
+            val fragment = when(it.itemId){
+                R.id.home -> { if (user != null) { HomeFragment() } else { WelcomeFragment() } }
+                R.id.account -> { if (user != null) { AccountFragment() } else { WelcomeFragment() } }
+                else -> { HomeFragment() }
+            }
+            loadFragment(fragment)
+            true
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, fragment)
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

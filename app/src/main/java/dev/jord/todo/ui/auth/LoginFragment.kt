@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
 import dev.jord.todo.databinding.FragmentLoginBinding
+import dev.jord.todo.ui.home.HomeFragment
 import dev.jord.todo.util.*
 
 @AndroidEntryPoint
@@ -40,7 +41,9 @@ class LoginFragment : Fragment() {
             }
         }
         binding.forgotPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_Login_to_ForgotPassword)
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.container, ForgotPasswordFragment())
+                ?.commit();
         }
     }
 
@@ -57,7 +60,9 @@ class LoginFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.hide()
                     snackbar(state.data)
-                    findNavController().navigate(R.id.action_Login_to_Home)
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.container, HomeFragment())
+                        ?.commit();
                 }
             }
         }
