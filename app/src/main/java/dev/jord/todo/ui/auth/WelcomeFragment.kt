@@ -30,14 +30,10 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginButton.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.container, LoginFragment())
-                ?.commit();
+            findNavController().navigate(R.id.action_Welcome_to_Login)
         }
         binding.registerButton.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.container, RegisterFragment())
-                ?.commit();
+            findNavController().navigate(R.id.action_Welcome_to_Register)
         }
     }
 

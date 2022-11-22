@@ -44,6 +44,10 @@
         android:name="dev.jord.todo.ui.auth.ForgotPasswordFragment"
         android:label="@string/forgot_password"
         tools:layout="@layout/fragment_forgot_password">
+
+        <action
+            android:id="@+id/action_ForgotPassword_to_Login"
+            app:destination="@+id/LoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/RegisterFragment"

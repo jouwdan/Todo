@@ -1,5 +1,6 @@
 package dev.jord.todo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -45,7 +46,8 @@ class MainActivity : AppCompatActivity() {
             loadFragment(HomeFragment())
             binding.bottomNavigation.show()
         } else {
-            loadFragment(WelcomeFragment())
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
             binding.bottomNavigation.hide()
         }
         setupOnClickListener()
@@ -74,11 +76,5 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
     }
 }

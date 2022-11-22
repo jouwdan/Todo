@@ -41,9 +41,7 @@ class LoginFragment : Fragment() {
             }
         }
         binding.forgotPassword.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.container, ForgotPasswordFragment())
-                ?.commit();
+            findNavController().navigate(R.id.action_Login_to_ForgotPassword)
         }
     }
 
