@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,11 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     val viewModel: AuthViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +47,9 @@ class LoginFragment : Fragment() {
             }
         }
         binding.forgotPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_Login_to_ForgotPassword)
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.container, ForgotPasswordFragment())
+                ?.commit();
         }
     }
 

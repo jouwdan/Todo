@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.jord.todo.R
@@ -51,7 +50,9 @@ class ForgotPasswordFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.hide()
                     snackbar(state.data)
-                    findNavController().navigate(R.id.action_ForgotPassword_to_Login)
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.container, LoginFragment())
+                        ?.commit();
                 }
             }
         }

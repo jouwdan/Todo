@@ -1,15 +1,16 @@
 package dev.jord.todo.ui.auth
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
 import dev.jord.todo.databinding.FragmentWelcomeBinding
+
 
 @AndroidEntryPoint
 class WelcomeFragment : Fragment() {
@@ -18,6 +19,11 @@ class WelcomeFragment : Fragment() {
 
     private val binding get() = _binding!!
     val viewModel: AuthViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,19 +36,14 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_Welcome_to_Login)
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.container, LoginFragment())
+                ?.commit();
         }
         binding.registerButton.setOnClickListener {
-            findNavController().navigate(R.id.action_Welcome_to_Register)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.getSession { user ->
-            if (user != null){
-                findNavController().navigate(R.id.action_Welcome_to_Home)
-            }
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.container, RegisterFragment())
+                ?.commit();
         }
     }
 
