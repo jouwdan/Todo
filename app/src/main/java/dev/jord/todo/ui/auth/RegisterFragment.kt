@@ -1,5 +1,6 @@
 package dev.jord.todo.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.jord.todo.MainActivity
 import dev.jord.todo.R
 import dev.jord.todo.data.model.User
 import dev.jord.todo.databinding.FragmentRegisterBinding
@@ -63,9 +65,8 @@ class RegisterFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.hide()
                     snackbar(state.data)
-                    activity?.supportFragmentManager?.beginTransaction()
-                        ?.replace(R.id.container, HomeFragment())
-                        ?.commit();
+                    (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+                    startActivity(Intent(activity, MainActivity::class.java))
                 }
             }
         }

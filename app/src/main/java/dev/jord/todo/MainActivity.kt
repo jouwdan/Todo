@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         if (user != null) {
             loadFragment(HomeFragment())
-            binding.bottomNavigation.show()
         } else {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
