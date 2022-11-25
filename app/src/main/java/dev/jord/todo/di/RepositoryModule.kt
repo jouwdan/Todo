@@ -10,6 +10,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.jord.todo.data.repository.AuthRepository
 import dev.jord.todo.data.repository.AuthRepositoryImplementation
+import dev.jord.todo.data.repository.TaskRepository
+import dev.jord.todo.data.repository.TaskRepositoryImplementation
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -24,5 +26,14 @@ object RepositoryModule {
         gson: Gson
     ): AuthRepository {
         return AuthRepositoryImplementation(auth,database,appPreferences,gson)
+    }
+
+    @Provides
+    @Singleton
+    fun ProvidesTaskRepository(
+        database: FirebaseFirestore,
+        auth: FirebaseAuth,
+    ): TaskRepository {
+        return TaskRepositoryImplementation(auth,database)
     }
 }

@@ -6,5 +6,6 @@ object SharedPrefConstants {
 }
 
 object FireStoreCollection {
+    val TASKS = "tasks"
     val USER = "user"
 }

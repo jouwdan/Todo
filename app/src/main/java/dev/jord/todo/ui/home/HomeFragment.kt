@@ -11,13 +11,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
 import dev.jord.todo.databinding.FragmentHomeBinding
 import dev.jord.todo.ui.auth.AuthViewModel
+import dev.jord.todo.ui.auth.ForgotPasswordFragment
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
+
+    val viewModel: TaskViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +31,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.addTaskButton.setOnClickListener() {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.container, AddTaskFragment())
+                ?.commit();
+        }
     }
 
     override fun onDestroyView() {
