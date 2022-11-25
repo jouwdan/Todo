@@ -6,56 +6,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
+import dev.jord.todo.data.model.Task
+import dev.jord.todo.databinding.FragmentAddTaskBinding
+import dev.jord.todo.databinding.FragmentForgotPasswordBinding
+import dev.jord.todo.ui.auth.AuthViewModel
+import dev.jord.todo.util.snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AddTaskFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class AddTaskFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    val TAG: String = "AddTaskFragment"
+    lateinit var binding: FragmentAddTaskBinding
+    val viewModel: TaskViewModel by viewModels()
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_task, container, false)
-    }
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            return inflater.inflate(R.layout.fragment_add_task, container, false)
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddTaskFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddTaskFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            binding = FragmentAddTaskBinding.bind(view)
+            binding.addTaskButton.setOnClickListener {
+                viewModel.addTask(
+                    Task(
+                        title = binding.taskName.text.toString(),
+                        description = binding.taskDescription.text.toString()
+                    )
+                )
+                snackbar("Task added successfully!")
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.container, HomeFragment())
+                    ?.commit();
             }
+        }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }
