@@ -36,6 +36,14 @@ class TaskAdapter(
         fun bind(task: Task) {
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
+            if(task.completed) {
+                binding.taskStatus.text = "Done"
+            } else {
+                binding.taskStatus.text = "To do"
+            }
+            binding.taskPriority.text = task.priority
+            binding.taskDueDate.text = task.dueDate
+            binding.taskLocation.text = task.location
             binding.doneButton.setOnClickListener {
                 donePressed?.invoke(task)
             }
