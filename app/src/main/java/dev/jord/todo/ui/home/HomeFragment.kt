@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
 import dev.jord.todo.data.model.Task
@@ -29,6 +30,9 @@ class HomeFragment : Fragment() {
             deletePressed = { task -> deletePressed(task) }
         )
     }
+    private var taskList = mutableListOf<Task>()
+    private var incompleteTaskList = mutableListOf<Task>()
+    private var completeTaskList = mutableListOf<Task>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +53,15 @@ class HomeFragment : Fragment() {
                 ?.replace(R.id.container, AddTaskFragment())
                 ?.commit();
         }
+
         binding.taskList.layoutManager = LinearLayoutManager(requireContext())
         binding.taskList.adapter = adapter
         authViewModel.getSession {
             viewModel.getTasks(it)
         }
         observer()
+        tabsObserver()
     }
-
 
     private fun observer() {
         viewModel.tasks.observe(viewLifecycleOwner) { state ->
@@ -66,7 +71,13 @@ class HomeFragment : Fragment() {
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
-                    adapter.updateList(state.data.toMutableList())
+                    taskList = state.data.toMutableList()
+                    for(task in taskList){
+                        if(!task.completed){
+                            incompleteTaskList.add(task)
+                        }
+                    }
+                    adapter.updateList(incompleteTaskList)
                 }
                 is UiState.Failure -> {
                     binding.progressBar.hide()
@@ -77,6 +88,36 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun tabsObserver() {
+        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab?.position == 0) {
+                    incompleteTaskList.clear()
+                    for(task in taskList){
+                        if(!task.completed){
+                            incompleteTaskList.add(task)
+                        }
+                    }
+                    adapter.updateList(incompleteTaskList)
+                } else {
+                    completeTaskList.clear()
+                    for(task in taskList){
+                        if(task.completed){
+                            completeTaskList.add(task)
+                        }
+                    }
+                    adapter.updateList(completeTaskList)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
     }
 
     private fun deletePressed(task: Task) {
