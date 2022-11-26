@@ -70,6 +70,29 @@
                 />
         </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+                <com.google.android.material.button.MaterialButton
+                    app:icon="@drawable/ic_baseline_check_24"
+                    android:id="@+id/done_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Done"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    app:icon="@drawable/ic_baseline_delete_forever_24"
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    app:backgroundTint="@color/design_default_color_error"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
