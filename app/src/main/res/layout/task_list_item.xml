@@ -7,9 +7,8 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
         style="?attr/materialCardViewElevatedStyle"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,6 +40,8 @@
         android:layout_height="wrap_content"
         android:text="Task Description"
         android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_title"
@@ -49,7 +50,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:orientation="horizontal">
 
 
@@ -57,20 +57,17 @@
                 android:id="@+id/task_due_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="4dp"
                 android:text="Task Due Date"
-                style="?attr/borderlessButtonStyle"
                 />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/task_priority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="4dp"
                 android:text="Task Priority"
-                style="?attr/borderlessButtonStyle"
                 />
-\
         </LinearLayout>
 
         </LinearLayout>
