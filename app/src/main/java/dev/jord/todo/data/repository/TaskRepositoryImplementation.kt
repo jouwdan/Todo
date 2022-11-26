@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import dev.jord.todo.data.model.Task
+import dev.jord.todo.data.model.User
 import dev.jord.todo.util.FireStoreCollection
 import dev.jord.todo.util.UiState
 import javax.inject.Inject
@@ -14,55 +15,55 @@ class TaskRepositoryImplementation @Inject constructor(
     val database: FirebaseFirestore
 ) : TaskRepository {
 
-        override fun addTask(task: Task, result: (UiState<String>) -> Unit) {
+        override fun addTask(task: Task, result: (UiState<Pair<Task,String>>) -> Unit) {
             database.collection(FireStoreCollection.TASKS)
                 .document(auth.currentUser?.uid ?: "")
                 .collection(FireStoreCollection.TASKS)
                 .add(task)
                 .addOnSuccessListener {
-                    result.invoke(UiState.Success("Task added successfully!"))
+                    result.invoke(UiState.Success(Pair(task,"Task added successfully!")))
                 }
                 .addOnFailureListener {
                     result.invoke(UiState.Failure(it.message))
                 }
         }
 
-        override fun updateTask(task: Task, result: (UiState<String>) -> Unit) {
+        override fun updateTask(task: Task, result: (UiState<Pair<Task,String>>) -> Unit) {
             database.collection(FireStoreCollection.TASKS)
                 .document(auth.currentUser?.uid ?: "")
                 .collection(FireStoreCollection.TASKS)
                 .document(task.id)
                 .set(task)
                 .addOnSuccessListener {
-                    result.invoke(UiState.Success("Task updated successfully!"))
+                    result.invoke(UiState.Success(Pair(task, "Task updated successfully!")))
                 }
                 .addOnFailureListener {
                     result.invoke(UiState.Failure(it.message))
                 }
         }
 
-        override fun deleteTask(task: Task, result: (UiState<String>) -> Unit) {
+        override fun deleteTask(task: Task, result: (UiState<Pair<Task,String>>) -> Unit) {
             database.collection(FireStoreCollection.TASKS)
                 .document(auth.currentUser?.uid ?: "")
                 .collection(FireStoreCollection.TASKS)
                 .document(task.id)
                 .delete()
                 .addOnSuccessListener {
-                    result.invoke(UiState.Success("Task deleted successfully!"))
+                    result.invoke(UiState.Success(Pair(task, "Task deleted successfully!")))
                 }
                 .addOnFailureListener {
                     result.invoke(UiState.Failure(it.message))
                 }
         }
 
-    override fun getTasks(result: (UiState<List<Task>>) -> Unit) {
+    override fun getTasks(user: User?, result: (UiState<List<Task>>) -> Unit) {
             database.collection(FireStoreCollection.TASKS)
                 .document(auth.currentUser?.uid ?: "")
                 .collection(FireStoreCollection.TASKS)
                 .get()
                 .addOnSuccessListener {
                     val tasks = it.toObjects(Task::class.java)
-                    result.invoke(UiState.Success(tasks))
+                    result.invoke(UiState.Success(tasks.filterNotNull()))
                 }
                 .addOnFailureListener {
                     result.invoke(UiState.Failure(it.message))
