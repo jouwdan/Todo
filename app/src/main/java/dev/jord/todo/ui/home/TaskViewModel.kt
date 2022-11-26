@@ -58,7 +58,7 @@ class TaskViewModel @Inject constructor(
 
     fun doneTask(task: Task) {
         _doneTask.value = UiState.Loading
-        task.completed = true
+        task.completed = !task.completed
         repository.updateTask(task) {
             _doneTask.value = it
         }

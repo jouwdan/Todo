@@ -89,6 +89,9 @@ class HomeFragment : Fragment() {
 
     private fun donePressed(task: Task) {
         viewModel.doneTask(task)
-        snackbar("Task marked as done!")
+        snackbar("Toggled done status!")
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.container, HomeFragment())
+            ?.commit();
     }
 }
