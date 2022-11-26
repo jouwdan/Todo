@@ -8,8 +8,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_margin="4dp"
+        app:contentPadding="4dp"
         app:cardCornerRadius="8dp"
-        app:cardUseCompatPadding="true"
         style="?attr/materialCardViewElevatedStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task Title"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task Description"
-        android:textSize="16sp"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,21 +51,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
-            <com.google.android.material.button.MaterialButton
+            <TextView
                 android:id="@+id/task_due_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="8dp"
                 android:text="Task Due Date"
+                android:textAppearance="?attr/textAppearanceBodySmall"
                 />
 
-            <com.google.android.material.button.MaterialButton
+            <TextView
                 android:id="@+id/task_priority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginStart="8dp"
                 android:text="Task Priority"
+                android:textAppearance="?attr/textAppearanceBodySmall"
                 />
         </LinearLayout>
 
