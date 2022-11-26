@@ -1,14 +1,15 @@
 package dev.jord.todo.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import dev.jord.todo.R
 import dev.jord.todo.data.model.Task
 import dev.jord.todo.databinding.TaskListItemBinding
 
-class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(
+    val donePressed: ((Task) -> Unit)? = null,
+    val deletePressed: ((Task) -> Unit)? = null
+): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     private var list: MutableList<Task> = arrayListOf()
 
@@ -31,10 +32,16 @@ class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
         return list.size
     }
 
-    class TaskViewHolder(val binding: TaskListItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(val binding: TaskListItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task) {
             binding.taskTitle.text = task.title
             binding.taskDescription.text = task.description
+            binding.doneButton.setOnClickListener {
+                donePressed?.invoke(task)
+            }
+            binding.deleteButton.setOnClickListener {
+                deletePressed?.invoke(task)
+            }
         }
     }
 }

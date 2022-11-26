@@ -24,7 +24,10 @@ class HomeFragment : Fragment() {
     private val viewModel: TaskViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
     val adapter by lazy {
-        TaskAdapter()
+        TaskAdapter(
+            donePressed = { task -> donePressed(task) },
+            deletePressed = { task -> deletePressed(task) }
+        )
     }
 
     override fun onCreateView(
@@ -74,5 +77,18 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun deletePressed(task: Task) {
+        viewModel.deleteTask(task)
+        snackbar("Task deleted successfully!")
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.container, HomeFragment())
+            ?.commit();
+    }
+
+    private fun donePressed(task: Task) {
+        viewModel.doneTask(task)
+        snackbar("Task marked as done!")
     }
 }
