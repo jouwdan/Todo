@@ -2,6 +2,10 @@
 
 Todo - a task management application built for Android
 
+## Details
+
+Todo is a basic task manager/todo list built for Android. It is built using Kotlin, MVVM / Clean Architecture, Fragments, Dagger & Hilt, with Firebase for the backend (Authentication & Firestore).
+
 ## References
 
 [Android Architecture Documentation](https://developer.android.com/topic/architecture)
