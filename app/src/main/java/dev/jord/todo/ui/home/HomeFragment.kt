@@ -13,6 +13,8 @@ import dev.jord.todo.data.model.Task
 import dev.jord.todo.databinding.FragmentHomeBinding
 import dev.jord.todo.ui.auth.AuthViewModel
 import dev.jord.todo.util.UiState
+import dev.jord.todo.util.hide
+import dev.jord.todo.util.show
 import dev.jord.todo.util.snackbar
 
 @AndroidEntryPoint
@@ -61,7 +63,6 @@ class HomeFragment : Fragment() {
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
-                    snackbar("Tasks loaded successfully")
                     adapter.updateList(state.data.toMutableList())
                 }
                 is UiState.Failure -> {
