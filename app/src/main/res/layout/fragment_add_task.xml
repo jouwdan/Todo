@@ -63,7 +63,28 @@
             android:inputType="none"
             tools:text="Low" />
             />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dueDateMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:hint="Due Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priorityMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/dueDateDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            tools:text="Today" />
+        />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -76,6 +97,6 @@
         android:text="Add Task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priorityMenu" />
+        app:layout_constraintTop_toBottomOf="@+id/dueDateMenu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

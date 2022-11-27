@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
 import dev.jord.todo.data.model.Task
@@ -43,11 +44,23 @@ class AddTaskFragment : Fragment() {
             val arrayAdapter = activity?.let { ArrayAdapter(it, R.layout.dropdown_item, priorityArray) }
             binding.priorityDropdown.setAdapter(arrayAdapter)
 
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select date")
+                    .build()
+            binding.dueDateDropdown.setOnClickListener {
+                datePicker.show(childFragmentManager, "DATE_PICKER")
+            }
+            datePicker.addOnPositiveButtonClickListener {
+                binding.dueDateDropdown.setText(datePicker.headerText)
+            }
+
             binding.addTaskButton.setOnClickListener {
                 val title = binding.taskName.text.toString()
                 val description = binding.taskDescription.text.toString()
                 val priority = binding.priorityDropdown.text.toString()
-                val task = Task(title = title, description = description, priority = priority)
+                val date = binding.dueDateDropdown.text.toString()
+                val task = Task(title = title, description = description, priority = priority, dueDate = date)
                 viewModel.addTask(task)
                 snackbar("Task added successfully!")
                 activity?.supportFragmentManager?.beginTransaction()
