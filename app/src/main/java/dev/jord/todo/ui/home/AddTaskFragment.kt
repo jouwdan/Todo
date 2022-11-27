@@ -13,8 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.jord.todo.R
 import dev.jord.todo.data.model.Task
 import dev.jord.todo.databinding.FragmentAddTaskBinding
-import dev.jord.todo.databinding.FragmentForgotPasswordBinding
-import dev.jord.todo.ui.auth.AuthViewModel
 import dev.jord.todo.util.snackbar
 
 @AndroidEntryPoint
@@ -60,7 +58,8 @@ class AddTaskFragment : Fragment() {
                 val description = binding.taskDescription.text.toString()
                 val priority = binding.priorityDropdown.text.toString()
                 val date = binding.dueDateDropdown.text.toString()
-                val task = Task(title = title, description = description, priority = priority, dueDate = date)
+                val location = binding.locationTextField.text.toString()
+                val task = Task(title = title, description = description, priority = priority, dueDate = date, location = location)
                 viewModel.addTask(task)
                 snackbar("Task added successfully!")
                 activity?.supportFragmentManager?.beginTransaction()
