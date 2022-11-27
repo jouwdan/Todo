@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,13 +38,17 @@ class AddTaskFragment : Fragment() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             binding = FragmentAddTaskBinding.bind(view)
+
+            val priorityArray = resources.getStringArray(R.array.priority)
+            val arrayAdapter = activity?.let { ArrayAdapter(it, R.layout.dropdown_item, priorityArray) }
+            binding.priorityDropdown.setAdapter(arrayAdapter)
+
             binding.addTaskButton.setOnClickListener {
-                viewModel.addTask(
-                    Task(
-                        title = binding.taskName.text.toString(),
-                        description = binding.taskDescription.text.toString()
-                    )
-                )
+                val title = binding.taskName.text.toString()
+                val description = binding.taskDescription.text.toString()
+                val priority = binding.priorityDropdown.text.toString()
+                val task = Task(title = title, description = description, priority = priority)
+                viewModel.addTask(task)
                 snackbar("Task added successfully!")
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.container, HomeFragment())
