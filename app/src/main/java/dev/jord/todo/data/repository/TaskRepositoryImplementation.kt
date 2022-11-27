@@ -70,7 +70,7 @@ class TaskRepositoryImplementation @Inject constructor(
                 }
         }
 
-        override fun getTask(id: String, result: (UiState<String>) -> Unit) {
+        override fun getTask(id: String, result: (UiState<Pair<Task,String>>) -> Unit) {
             database.collection(FireStoreCollection.TASKS)
                 .document(auth.currentUser?.uid ?: "")
                 .collection(FireStoreCollection.TASKS)
@@ -79,7 +79,7 @@ class TaskRepositoryImplementation @Inject constructor(
                 .addOnSuccessListener {
                     val task = it.toObject(Task::class.java)
                     if(task != null) {
-                        result.invoke(UiState.Success(task.id))
+                        result.invoke(UiState.Success(Pair(task, "Task deleted successfully!")))
                     } else {
                         result.invoke(UiState.Failure("Task not found!"))
                     }
