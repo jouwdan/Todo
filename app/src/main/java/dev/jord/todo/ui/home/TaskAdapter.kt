@@ -12,6 +12,7 @@ import dev.jord.todo.databinding.TaskListItemBinding
 
 class TaskAdapter(
     val donePressed: ((Task) -> Unit)? = null,
+    val editPressed: ((Task) -> Unit)? = null,
     val deletePressed: ((Task) -> Unit)? = null
 ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
@@ -56,6 +57,9 @@ class TaskAdapter(
             binding.taskLocation.text = task.location
             binding.doneButton.setOnClickListener {
                 donePressed?.invoke(task)
+            }
+            binding.editButton.setOnClickListener {
+                editPressed?.invoke(task)
             }
             binding.deleteButton.setOnClickListener {
                 deletePressed?.invoke(task)

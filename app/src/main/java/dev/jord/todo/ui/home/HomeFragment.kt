@@ -27,7 +27,8 @@ class HomeFragment : Fragment() {
     val adapter by lazy {
         TaskAdapter(
             donePressed = { task -> donePressed(task) },
-            deletePressed = { task -> deletePressed(task) }
+            deletePressed = { task -> deletePressed(task) },
+            editPressed = { task -> editPressed(task) }
         )
     }
     private var taskList = mutableListOf<Task>()
@@ -133,6 +134,12 @@ class HomeFragment : Fragment() {
         snackbar("Toggled done status!")
         activity?.supportFragmentManager?.beginTransaction()
             ?.replace(R.id.container, HomeFragment())
+            ?.commit();
+    }
+
+    private fun editPressed(task: Task) {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.container, EditTaskFragment())
             ?.commit();
     }
 }
