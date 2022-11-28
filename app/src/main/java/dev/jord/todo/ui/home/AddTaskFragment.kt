@@ -1,5 +1,6 @@
 package dev.jord.todo.ui.home
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import dev.jord.todo.R
 import dev.jord.todo.data.model.Task
 import dev.jord.todo.databinding.FragmentAddTaskBinding
 import dev.jord.todo.ui.auth.AuthViewModel
+import dev.jord.todo.util.UiState
 import dev.jord.todo.util.snackbar
 
 @AndroidEntryPoint
@@ -22,7 +24,9 @@ class AddTaskFragment(private val task: Task? = null) : BottomSheetDialogFragmen
 
     val TAG: String = "AddTaskFragment"
     lateinit var binding: FragmentAddTaskBinding
-    var closeFunction: ((Boolean) -> Unit)? = null
+    private var closeFunction: ((Boolean) -> Unit)? = null
+    private var saveTaskSuccess: Boolean = false
+    private var isValid = true
     val viewModel: TaskViewModel by viewModels()
     val authViewModel: AuthViewModel by viewModels()
 
@@ -72,7 +76,7 @@ class AddTaskFragment(private val task: Task? = null) : BottomSheetDialogFragmen
                 val date = binding.dueDateDropdown.text.toString()
                 val location = binding.locationTextField.text.toString()
                 val task = Task(title = title, description = description, priority = priority, dueDate = date, location = location)
-                if (validation()) {
+                if (task.id == "") {
                     viewModel.addTask(task)
                 }else {
                     viewModel.updateTask(task)
@@ -81,18 +85,44 @@ class AddTaskFragment(private val task: Task? = null) : BottomSheetDialogFragmen
                     ?.replace(R.id.container, HomeFragment())
                     ?.commit();
             }
+            observer()
         }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    fun observer() {
+        viewModel.addTask.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    binding.addTaskButton.isEnabled = false
+                } is UiState.Success -> {
+                    saveTaskSuccess = true
+                    snackbar("Task added successfully")
+                    closeFunction?.invoke(true)
+                    this.dismiss()
+                } is UiState.Failure -> {
+                    snackbar("Save failed, please try again")
+                }
+            }
+        }
+
+        viewModel.updateTask.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    binding.addTaskButton.isEnabled = false
+                } is UiState.Success -> {
+                    saveTaskSuccess = true
+                    snackbar("Task updated successfully")
+                    closeFunction?.invoke(true)
+                    this.dismiss()
+                } is UiState.Failure -> {
+                    snackbar("Save failed, please try again")
+                }
+            }
+        }
     }
 
-    private fun validation(): Boolean {
-        var isValid = true
-        if (binding.taskName.text.toString().isEmpty()) {
-            isValid = false
-        }
-        return isValid
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        closeFunction?.invoke(saveTaskSuccess)
     }
 
     fun setDismissListener(function: ((Boolean) -> Unit)?) {
