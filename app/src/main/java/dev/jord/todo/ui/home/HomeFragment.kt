@@ -138,8 +138,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun editPressed(task: Task) {
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.container, EditTaskFragment())
-            ?.commit();
+        val addTaskFragmentSheet = AddTaskFragment(task)
+        addTaskFragmentSheet.setDismissListener {
+            if (it) {
+                authViewModel.getSession {
+                    viewModel.getTasks(it)
+                }
+            }
+        }
+        addTaskFragmentSheet.show(childFragmentManager,"create_task")
     }
 }
