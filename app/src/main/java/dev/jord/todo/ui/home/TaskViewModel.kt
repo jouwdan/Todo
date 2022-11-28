@@ -31,8 +31,8 @@ class TaskViewModel @Inject constructor(
     private val _storeTasks = MutableLiveData<UiState<String>>()
     val storeTasks: LiveData<UiState<String>>
         get() = _storeTasks
-    private val _getTask = MutableLiveData<UiState<String>>()
-    val getTask: LiveData<UiState<String>>
+    private val _getTask = MutableLiveData<UiState<Pair<Task,String>>>()
+    val getTask: LiveData<UiState<Pair<Task,String>>>
         get() = _getTask
     private val _getTasks = MutableLiveData<UiState<List<Task>>>()
     val getTasks: MutableLiveData<UiState<List<Task>>>

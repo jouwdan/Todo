@@ -27,7 +27,8 @@ class HomeFragment : Fragment() {
     val adapter by lazy {
         TaskAdapter(
             donePressed = { task -> donePressed(task) },
-            deletePressed = { task -> deletePressed(task) }
+            deletePressed = { task -> deletePressed(task) },
+            editPressed = { task -> editPressed(task) }
         )
     }
     private var taskList = mutableListOf<Task>()
@@ -134,5 +135,17 @@ class HomeFragment : Fragment() {
         activity?.supportFragmentManager?.beginTransaction()
             ?.replace(R.id.container, HomeFragment())
             ?.commit();
+    }
+
+    private fun editPressed(task: Task) {
+        val addTaskFragmentSheet = AddTaskFragment(task)
+        addTaskFragmentSheet.setDismissListener {
+            if (it) {
+                authViewModel.getSession {
+                    viewModel.getTasks(it)
+                }
+            }
+        }
+        addTaskFragmentSheet.show(childFragmentManager,"create_task")
     }
 }
